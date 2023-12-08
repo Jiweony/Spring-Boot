@@ -1,0 +1,74 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>AJAX 업로드 하기</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap');
+
+        body {
+           font-family: 'Noto Sans KR', sans-serif;
+        }
+    </style>
+</head>
+<body>
+    <h1>AJAX 업로드하기</h1>
+    <form id="upload-form">
+        <input type="file" name="files" multiple>
+        <button class="btn">AJAX UPLOAD</button>
+    </form>
+
+    <br><br><br><br><br>
+
+    <h1>AJAX 이미지 출력하기</h1>
+
+    <div id="wrap">
+
+    </div>
+
+    <script>
+        document.querySelector(".btn").addEventListener('click', function(e) {
+            e.preventDefault();
+
+            let formData = new FormData();
+            let uploadData = document.querySelector("#upload-form")[0].files
+
+            for(let i = 0; i < uploadData.length; i++) {
+                formData.append("files", uploadData[i]);
+            }
+
+            $.ajax({
+                type: "post",
+                url: "/v3/upload",
+                dataType: "json",
+                data: formData,
+                contentType: false, //첨부파일 넘기려면 false 타입
+                processData: false, //post = false
+                success: function(result) {
+                    result.forEach((r) => {
+                        let output = "";
+                        result.forEach((r) => {
+                                            output += `<p>
+                            <img src="/${r.savedFileName}" alt="" width=150 height=150>
+                        </p>
+                        <p>
+                            <a href="/download?savedPathFileName=${r.savedPathFileName}">다운로드</a>
+                        </p>`;
+                        });
+                       document.querySelector("#wrap").innerHTML = output;
+                    });
+                }
+            });
+
+        });
+
+    </script>
+</body>
+</html>

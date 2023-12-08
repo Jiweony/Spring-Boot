@@ -1,0 +1,26 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>단일 파일 업로드 폼</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap');
+
+        body {
+           font-family: 'Noto Sans KR', sans-serif;
+        }
+    </style>
+</head>
+<body>
+<h2>단일 파일 업로드 폼(날짜별 디렉토리에 저장)</h2>
+<form action="/upload" method="post" enctype="multipart/form-data">
+    <input type="file" name="file">
+    <input type="submit" value="파일 업로드">
+</form>
+</body>
+</html>

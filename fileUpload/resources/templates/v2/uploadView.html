@@ -1,0 +1,42 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>파일 여러 개 보기</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap');
+
+        body {
+           font-family: 'Noto Sans KR', sans-serif;
+        }
+
+        .wrap {
+            width:100%;
+            max-width:1280px;
+            display:flex;
+            justify-content:space-between;
+            margin:0 auto;
+        }
+
+        p {
+            text-align:center;
+        }
+    </style>
+</head>
+<body>
+<h1>파일 여러 개 보기</h1>
+<div class="wrap">
+    <div th:each="img: ${imgs}">
+        <img th:src="@{|/${img.savedFileName}|}" alt="" width="150" height="150">
+        <p>
+            <a th:href="@{|/download?savedPathFileName=${img.savedPathFileName}|}">다운로드([[${img.savedFileSize}]])</a>
+        </p>
+    </div>
+</div>
+</body>
+</html>
