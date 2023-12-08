@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="en">
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>코리아아이티 아카데미 > 게시판 상세보기 입니다.</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+    <link rel="stylesheet" th:href="@{/css/reset.css}">
+    <link rel="stylesheet" th:href="@{/css/boardView.css}">
+</head>
+<body>
+<div class="wrap">
+    <div class="top">
+        <h3 class="en">
+            <i class="fa-solid fa-caret-right"></i> KOREA IT ACADEMY >
+            <span class="ko">게시판 상세보기입니다.</span>
+        </h3>
+    </div>
+
+    <table>
+        <tbody>
+            <tr>
+                <th>제목</th>
+                <td>[[${board.subject}]]</td>
+                <td>작성일</td>
+                <td>[[${#temporals.format(board.regdate, 'yyyy.MM.dd')}]]</td>
+            </tr>
+            <tr>
+                <th>작성자</th>
+                <td colspan="3">[[${board.writer}]]</td>
+            </tr>
+            <tr>
+                <th>첨부파일</th>
+                <td colspan="3">
+                    <th:block th:if="${!files.isEmpty()}">
+                        <th:block th:each="file : ${files}">
+
+                            <th:block th:if="${file.ext eq '.jpg' or file.ext eq '.png'}">
+                                <div class="img-box">
+                                    <img th:src="@{|/${file.folderName}/${file.savedFileName}|}">
+                                    <p class="img-btn">
+                                        <button class="btn red">다운로드</button>
+                                    </p>
+                                </div>
+                            </th:block>
+
+                            <th:block th:unless="${file.ext eq '.jpg' or file.ext eq '.png'}">
+                                [[${file.orgName}]]
+                                <a href="">
+                                    <button class="btn red">다운로드</button>
+                                </a>
+                            </th:block>
+
+                        </th:block>
+                    </th:block>
+
+                    <th:block th:unless="${!files.isEmpty()}">
+                        <p>참부파일이 없습니다.</p>
+                    </th:block>
+
+                </td>
+            </tr>
+            <tr>
+                <th>내용</th>
+                <td colspan="3">[[${board.content}]]</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <div class="bottom">
+        <div class="bottom-left">
+            <a th:href="@{/board/boardList?(configCode=${configCode})}">
+                <button type="button" class="btn black">게시물목록</button>
+            </a>
+        </div>
+        <div class="bottom-right">
+            <a th:href="@{/board/boardReply?(configCode=${configCode})}">
+                <button type="button" class="btn blue">게시물답변</button>
+            </a>
+            <a th:href="@{/board/boardModify?(configCode=${configCode})}">
+                <button type="button" class="btn green">게시물수정</button>
+            </a>
+            <a th:href="@{/board/boardDelete?(configCode=${configCode})}">
+                <button type="button" class="btn red">게시물삭제</button>
+            </a>
+        </div>
+    </div>
+</div>
+
+<script>
+
+</script>
+</body>
+</html>
